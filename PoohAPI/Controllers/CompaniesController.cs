@@ -48,7 +48,7 @@ namespace PoohAPI.Controllers
         [ProducesResponseType(400)]
         [ProducesResponseType(404)]
         public IActionResult GetAll([FromQuery]int maxCount = 5, [FromQuery]int offset = 0, [FromQuery]double? minStars = null,
-            [FromQuery]double? maxStars = null, [FromQuery]string cityName = null, [FromQuery]string countryName = null,
+            [FromQuery]double? maxStars = null, [FromQuery]int? minEmployees = null, [FromQuery]int? maxEmployees = null, [FromQuery]string cityName = null, [FromQuery]string countryName = null,
             [FromQuery]int? locationRange = null, [FromQuery]string additionalLocationSearchTerms = null, [FromQuery]int? major = null, [FromQuery]bool detailedCompanies = false )
         {
             if (maxCount < 1 || maxCount > 100)
@@ -58,7 +58,7 @@ namespace PoohAPI.Controllers
             if (minStars < 1 || minStars > 5 || maxStars < 1 || maxStars > 5)
                 return BadRequest("Number of stars should be between 1 and 5");
 
-            IEnumerable<BaseCompany> companies = this.companyReadService.GetListCompanies(maxCount, offset, minStars, maxStars,
+            IEnumerable<BaseCompany> companies = this.companyReadService.GetListCompanies(maxCount, offset, minStars, maxStars, minEmployees, maxEmployees,
                 cityName, countryName, locationRange, additionalLocationSearchTerms, major, detailedCompanies);
 
             if (companies is null)

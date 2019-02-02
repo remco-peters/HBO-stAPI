@@ -39,6 +39,24 @@ def f_test_max_stars(companies, max_stars):
 
         assert correct == True
 
+def f_test_min_employees(companies, min_employees):
+    for i in range(0, len(companies)):
+        base_company = companies[i]
+        correct = True
+        if base_company["employees"] < min_employees:
+            correct = False
+        
+        assert correct == True
+
+def f_test_max_employees(companies, max_employees):
+    for i in range(0, len(companies)):
+        base_company = companies[i]
+        correct = True
+        if base_company["employees"] > max_employees:
+            correct = False
+        
+        assert correct == True
+
 def f_test_country_name(companies, country_name):
     for i in range(0, len(companies)):
         base_company = companies[i]
@@ -121,6 +139,20 @@ def test_companies_maxstars():
     f_test_status_code_200(companies_request)
     companies = companies_request.json()
     f_test_max_stars(companies, 2)
+
+# Test multiple companies (minEmployees = 12)
+def test_companies_minemployees():
+    companies_request = requests.get(base_url+companies_path+"?minEmployees=12")
+    f_test_status_code_200(companies_request)
+    companies = companies_request.json()
+    f_test_min_employees(companies, 12)
+    
+# Test multiple companies (maxEmployees = 75)
+def test_companies_maxemployees():
+    companies_request = requests.get(base_url+companies_path+"?maxEmployees=75")
+    f_test_status_code_200(companies_request)
+    companies = companies_request.json()
+    f_test_max_employees(companies, 75)
 
 # Test multiple companies (countryName = Nederland)
 def test_companies_countryname():
