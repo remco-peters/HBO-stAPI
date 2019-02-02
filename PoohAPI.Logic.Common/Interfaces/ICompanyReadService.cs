@@ -8,7 +8,7 @@ namespace PoohAPI.Logic.Common.Interfaces
     public interface ICompanyReadService
     {
         IEnumerable<BaseCompany> GetListCompanies(int maxCount, int offset, double? minStars = null,
-            double? maxStars = null, string cityName = null, string countryName = null, int? locationRange = null,
+            double? maxStars = null, int? minEmployees = null, int? maxEmployees = null, string cityName = null, string countryName = null, int? locationRange = null,
             string additionalLocationSearchTerms = null, int? major = null, bool detailedCompanies = false);
         Company GetCompanyById(int id);
     }

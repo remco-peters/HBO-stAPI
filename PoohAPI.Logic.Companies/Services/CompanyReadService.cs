@@ -79,13 +79,14 @@ namespace PoohAPI.Logic.Companies.Services
         /// <param name="detailedCompanies">Whether or not the companies should have detailed information</param>
         /// <returns></returns>
         public IEnumerable<BaseCompany> GetListCompanies(int maxCount, int offset, double? minStars = null,
-            double? maxStars = null, string cityName = null, string countryName = null, int? locationRange = null,
+            double? maxStars = null, int? minEmployees = null, int? maxEmployees = null, string cityName = null, string countryName = null, int? locationRange = null,
             string additionalLocationSearchTerms = null, int? major = null, bool detailedCompanies = false)
         {
             Dictionary<string, object> parameters = new Dictionary<string, object>();
             
             this.AddCompanyBaseQuery(parameters, maxCount, offset);
             this.AddStarFilter(parameters, minStars, maxStars);
+            this.AddEmployeeCountFilter(parameters, minEmployees, maxEmployees);
             this.AddLocationFilter(parameters, countryName, additionalLocationSearchTerms, cityName, locationRange);
             this.AddMajorFilter(parameters, major);
 
@@ -150,6 +151,21 @@ namespace PoohAPI.Logic.Companies.Services
             {
                 this.queryBuilder.AddHaving("average_reviews < @maxStars");
                 parameters.Add("@maxStars", maxStars);
+            }
+        }
+
+        private void AddEmployeeCountFilter(Dictionary<string, object> parameters, int? minEmployees = null, int? maxEmployees = null)
+        {
+            if (!(minEmployees is null))
+            {
+                this.queryBuilder.AddHaving("werknemer_aantal > @minEmployees");
+                parameters.Add("@minEmployees", minEmployees);
+            }
+
+            if (!(maxEmployees is null))
+            {
+                this.queryBuilder.AddHaving("werknemer_aantal < @maxEmployees");
+                parameters.Add("@maxEmployees", maxEmployees);
             }
         }
 
