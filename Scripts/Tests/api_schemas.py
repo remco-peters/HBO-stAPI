@@ -54,6 +54,7 @@ base_company_schema = {
                     'name' : {'type' : 'string'}, 
                     'logoPath' : {'type' : 'string'}, 
                     'averageReviewStars' : {'type' : 'float'},
+                    'employees' : {'type' : 'integer'},
                     'majors' : {'type' : 'string', 'nullable' : True},
                     'location' : {'type' : 'dict', 'schema' : location_schema}
                     }
